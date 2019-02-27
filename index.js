@@ -7,7 +7,11 @@ class Marquee extends window.HTMLElement {
 
     // bgcolor
     // Sets the background color through color name or hexadecimal value.
-    // const bgcolor = (this.getAttribute('bgcolor') !== null) ? this.getAttribute('bgcolor') : false
+    const bgcolor = (this.getAttribute('bgcolor') !== null) ? this.getAttribute('bgcolor') : false
+
+    if (bgcolor) {
+      this.style.backgroundColor = bgcolor
+    }
 
     // direction
     // Sets the direction of the scrolling within the marquee. Possible values are left, right, up and down. If no value is specified, the default value is left.

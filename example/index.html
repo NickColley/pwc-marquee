@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Progressive Web Component: Marquee</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      html {
+        font-family: sans-serif;
+        font-size: 18px;
+      }
+      body {
+        max-width: 40rem;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Progressive Web Component: Marquee</h1>
+    
+    <h2>Default</h2>
+    <pwc-marquee>Test default behaviour</pwc-marquee>
+    <marquee>Test default behaviour</marquee>
+    
+    <h2>behavior</h2>
+    <h3>scroll (default)</h3>
+    <pwc-marquee behavior="slide">Test marquee</pwc-marquee>
+    <marquee behavior="slide">Test marquee</marquee>
+  
+    <h3>slide</h3>
+    <pwc-marquee behavior="slide">Test marquee</pwc-marquee>
+    <marquee behavior="slide">Test marquee</marquee>
+  
+    <h3>alternate</h3>
+    <pwc-marquee behavior="alternate">Test marquee</pwc-marquee>
+    <marquee behavior="alternate">Test marquee</marquee>
+    
+    <h2>direction with behavior: scroll</h2>
+    <h3>left (default)</h3>
+    <pwc-marquee direction="left">Test marquee</pwc-marquee>
+    <marquee direction="left">Test marquee</marquee>
+  
+    <h3>right</h3>
+    <pwc-marquee direction="right">Test marquee</pwc-marquee>
+    <marquee direction="right">Test marquee</marquee>
+  
+    <h3>up</h3>
+    <pwc-marquee direction="up" height="50">Test marquee</pwc-marquee>
+    <marquee direction="up" height="50">Test marquee</marquee>
+
+    <h3>down</h3>
+    <pwc-marquee direction="down" height="50">Test marquee</pwc-marquee>
+    <marquee direction="down" height="50">Test marquee</marquee>
+  
+    <h2>direction with behavior: slide</h2>
+    <h3>left (default)</h3>
+    <pwc-marquee behavior="slide" direction="left">Test marquee</pwc-marquee>
+    <marquee behavior="slide" direction="left">Test marquee</marquee>
+    
+    <h3>right</h3>
+    <pwc-marquee behavior="slide" direction="right">Test marquee</pwc-marquee>
+    <marquee behavior="slide" direction="right">Test marquee</marquee>
+   
+    <h3>up</h3>
+    <pwc-marquee behavior="slide" direction="up" height="50">Test marquee</pwc-marquee>
+    <marquee behavior="slide" direction="up" height="50">Test marquee</marquee>
+    
+    <h3>down</h3>
+    <pwc-marquee behavior="slide" direction="down" height="50">Test marquee</pwc-marquee>
+    <marquee behavior="slide" direction="down" height="50">Test marquee</marquee>
+    
+    <h2>direction with behavior: alternate</h2>
+    <h3>left (default)</h3>
+    <pwc-marquee behavior="alternate" direction="left">Test marquee</pwc-marquee>
+    <marquee behavior="alternate" direction="left">Test marquee</marquee>
+   
+    <h3>right</h3>
+    <pwc-marquee behavior="alternate" direction="right">Test marquee</pwc-marquee>
+    <marquee behavior="alternate" direction="right">Test marquee</marquee>
+    
+    <h3>up</h3>
+    <pwc-marquee behavior="alternate" direction="up">Test marquee</pwc-marquee>
+    <marquee behavior="alternate" direction="up">Test marquee</marquee>
+    
+    <h3>down</h3>
+    <pwc-marquee behavior="alternate" direction="down">Test marquee</pwc-marquee>
+    <marquee behavior="alternate" direction="down">Test marquee</marquee>
+    
+    <h2>scrollamount</h2>
+    <pwc-marquee scrollamount="12">Test marquee</pwc-marquee>
+    <marquee scrollamount="12">Test marquee</marquee>
+    
+    <h2>loop</h2>
+    <pwc-marquee loop="1">Test marquee</pwc-marquee>
+    <marquee loop="1">Test marquee</marquee>
+    
+    <h2>vspace</h2>
+    <pwc-marquee vspace="100">Test marquee</pwc-marquee>
+    <marquee vspace="100">Test marquee</marquee>
+    
+    <h2>hspace</h2>
+    <pwc-marquee hspace="100">Test marquee</pwc-marquee>
+    <marquee hspace="100">Test marquee</marquee>
+    
+    <h2>height</h2>
+    <pwc-marquee height="100">Test marquee</pwc-marquee>
+    <marquee height="100">Test marquee</marquee>
+    
+    <h2>width</h2>
+    <pwc-marquee width="100">Test marquee</pwc-marquee>
+    <marquee width="100">Test marquee</marquee>
+    
+    <h2>Links</h2>
+    <pwc-marquee>
+      This should have links inside <a href="#">link</a> and still work
+    </pwc-marquee>
+    <marquee>
+      This should have links inside <a href="#">link</a> and still work
+    </marquee>
+    
+    <h2>Image</h2>
+    <pwc-marquee>
+      <img src="./billmurray.jpg" alt=""/>
+    </pwc-marquee>
+    <marquee>
+      <img src="./billmurray.jpg" alt=""/>
+    </marquee>
+    
+    <h2>Bunch o' stuff</h2>
+    <pwc-marquee>
+      <h2>Hello, World</h2>
+      <p>
+        Paragraph of text here why not.
+      </p>
+      <img src="./billmurray.jpg" alt=""/>
+      <label>
+        Random input
+        <input/>
+      </label>
+    </pwc-marquee>
+    <marquee>
+      <h2>Hello, World</h2>
+      <p>
+        Paragraph of text here why not.
+      </p>
+      <img src="./billmurray.jpg" alt=""/>
+      <label>
+        Random input
+        <input/>
+      </label>
+    </marquee>
+  
+    <h2>Nested</h2>
+    <pwc-marquee direction="down" width="250" height="200" behavior="alternate" style="border:solid">
+      <pwc-marquee behavior="alternate">
+        This text will bounce
+      </pwc-marquee>
+    </pwc-marquee>
+
+    <marquee direction="down" width="250" height="200" behavior="alternate" style="border:solid">
+      <marquee behavior="alternate">
+        This text will bounce
+      </marquee>
+    </marquee>
+    
+    <h2>Extra features</h2>
+    <h3>Custom easing</h3>
+    <pwc-marquee easing="ease-in-out">Test marquee</pwc-marquee>
+    
+    <h3>Stagger</h3>
+    <h4>letter</h4>
+    <pwc-marquee stagger="letters" staggerscale="1">Testing staggered letters</pwc-marquee>
+    <pwc-marquee stagger="letters" staggerscale="1.5">Testing staggered letters</pwc-marquee>
+    <pwc-marquee stagger="letters" staggerscale="1.5" behavior="slide" scrollamount="50" easing="ease-in-out">Testing staggered <a href="#">link</a> letters</pwc-marquee>
+    <pwc-marquee stagger="letters" staggerscale="1.5" behavior="slide" scrollamount="100">Testing staggered <img style="display: inline-block;" height="16" width="16" src="./billmurray.jpg" alt=""/> letters</pwc-marquee>
+
+    <h4>words</h4>
+    <pwc-marquee stagger="words" staggerscale="1">Testing staggered words</pwc-marquee>
+    <pwc-marquee stagger="words" staggerscale="1.5">Testing staggered words</pwc-marquee>
+    <pwc-marquee stagger="words" staggerscale="1.5" behavior="slide" scrollamount="100">Testing staggered <a href="#">link</a> words</pwc-marquee>
+    <pwc-marquee stagger="words" staggerscale="1.5" behavior="slide" scrollamount="100">Testing staggered <img style="display: inline-block;" height="16" width="16" src="./billmurray.jpg" alt=""/> words</pwc-marquee>
+
+    <script type="module">
+      import Marquee from "../index.js"
+    
+      window.customElements.define('pwc-marquee', Marquee)
+    </script>
+  </body>
+</html>

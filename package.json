@@ -1,5 +1,5 @@
 {
-  "name": "@progressive-web-components-pwc/marquee",
+  "name": "pwc-marquee",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

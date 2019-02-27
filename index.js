@@ -279,46 +279,58 @@ class Marquee extends window.HTMLElement {
     function moveInsideLeft (coords, callback) {
       let { element } = coords
       const moveInPX = 0
-      const transitionTime = speed(wordWidth + containerWidth, MARQUEE_SPEED)
+      const transitionTime = speed(containerWidth, MARQUEE_SPEED)
       setTransition(coords, transitionTime)
       element.style.transform = `translateX(${moveInPX}px)`
       handleCallback(element, true, callback)
     }
 
-    function moveLeft (coords, callback) {
+    function resetLeft (coords, callback) {
+      moveLeft(coords, callback, true)
+    }
+
+    function moveLeft (coords, callback, reset) {
       let { element } = coords
       const moveInPX = wordWidth
-      const transitionTime = speed(wordWidth + containerWidth, MARQUEE_SPEED)
+      const transitionTime = reset ? 0 : speed(wordWidth + containerWidth, MARQUEE_SPEED)
       setTransition(coords, transitionTime)
       element.style.transform = `translateX(${-moveInPX}px)`
-      handleCallback(element, true, callback)
+      handleCallback(element, !reset, callback)
     }
 
     function moveInsideRight (coords, callback) {
       let { element } = coords
       const moveInPX = containerWidth - wordWidth
-      const transitionTime = speed(moveInPX, MARQUEE_SPEED)
+      const transitionTime = speed(containerWidth, MARQUEE_SPEED)
       setTransition(coords, transitionTime)
       element.style.transform = `translateX(${moveInPX}px)`
       handleCallback(element, true, callback)
     }
 
-    function moveRight (coords, callback) {
+    function resetRight (coords, callback) {
+      moveRight(coords, callback, true)
+    }
+
+    function moveRight (coords, callback, reset) {
       let { element } = coords
-      const moveInPX = containerCoordinates.width
-      const transitionTime = speed(moveInPX, MARQUEE_SPEED)
+      const moveInPX = containerWidth
+      const transitionTime = reset ? 0 : speed(containerWidth + wordWidth, MARQUEE_SPEED)
       setTransition(coords, transitionTime)
       element.style.transform = `translateX(${moveInPX}px)`
-      handleCallback(element, true, callback)
+      handleCallback(element, !reset, callback)
     }
 
-    function moveUp (coords, callback) {
+    function resetUp (coords, callback) {
+      moveUp(coords, callback, true)
+    }
+
+    function moveUp (coords, callback, reset) {
       let { element } = coords
       const moveInPX = wordHeight
-      const transitionTime = speed(wordHeight + containerHeight, MARQUEE_SPEED)
+      const transitionTime = reset ? 0 : speed(wordHeight + containerHeight, MARQUEE_SPEED)
       setTransition(coords, transitionTime)
       element.style.transform = `translateY(${-moveInPX}px)`
-      handleCallback(element, true, callback)
+      handleCallback(element, !reset, callback)
     }
 
     function moveInsideUp (coords, callback) {
@@ -330,13 +342,17 @@ class Marquee extends window.HTMLElement {
       handleCallback(element, true, callback)
     }
 
-    function moveDown (coords, callback) {
+    function resetDown (coords, callback) {
+      moveDown(coords, callback, true)
+    }
+
+    function moveDown (coords, callback, reset) {
       let { element } = coords
       const moveInPX = containerHeight
-      const transitionTime = speed(containerHeight + wordHeight, MARQUEE_SPEED)
+      const transitionTime = reset ? 0 : speed(containerHeight + wordHeight, MARQUEE_SPEED)
       setTransition(coords, transitionTime)
       element.style.transform = `translateY(${moveInPX}px)`
-      handleCallback(element, true, callback)
+      handleCallback(element, !reset, callback)
     }
 
     function moveInsideDown (coords, callback) {
@@ -346,38 +362,6 @@ class Marquee extends window.HTMLElement {
       setTransition(coords, transitionTime)
       element.style.transform = `translateY(${moveInPX}px)`
       handleCallback(element, true, callback)
-    }
-
-    function resetLeft (coords, callback) {
-      let { element } = coords
-      const moveInPX = wordWidth
-      setTransition(coords, 0)
-      element.style.transform = `translateX(${-moveInPX}px)`
-      handleCallback(element, false, callback)
-    }
-
-    function resetRight (coords, callback) {
-      let { element } = coords
-      const moveInPX = containerCoordinates.width
-      setTransition(coords, 0)
-      element.style.transform = `translateX(${moveInPX}px)`
-      handleCallback(element, false, callback)
-    }
-
-    function resetDown (coords, callback) {
-      let { element } = coords
-      const moveInPX = containerHeight
-      setTransition(coords, 0)
-      element.style.transform = `translateY(${moveInPX}px)`
-      handleCallback(element, false, callback)
-    }
-
-    function resetUp (coords, callback) {
-      let { element } = coords
-      const moveInPX = wordHeight
-      setTransition(coords, 0)
-      element.style.transform = `translateY(${-moveInPX}px)`
-      handleCallback(element, false, callback)
     }
 
     function handleCallback (element, shouldTransition, callback) {

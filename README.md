@@ -48,3 +48,5 @@ As this is a progressive web component, for browsers that do not support custom 
 - If a user changes the size of their screen, the component does not currently adjust correctly.
 - [truespeed attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/marquee#attr-truespeed) is not implemented
 - [scrolldelay attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/marquee#attr-scrolldelay) is not implemented
+- Refactor main component code so it's not a mess
+- Consider using shadow DOM to make the HTML output cleaner

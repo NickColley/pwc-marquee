@@ -261,6 +261,10 @@ class Marquee extends window.HTMLElement {
       return (num - inMin) * (outMax - outMin) / (inMax - inMin) + outMin
     }
 
+    function speed (distance, time) {
+      return distance / time
+    }
+
     function setTransition (coords, time) {
       let { element, index } = coords
 
@@ -272,100 +276,14 @@ class Marquee extends window.HTMLElement {
       element.style.transition = `${time}s ${easing}`
     }
 
-    function speed (distance, time) {
-      return distance / time
-    }
-
-    function moveInsideLeft (coords, callback) {
+    function handleStep (step, coords, callback) {
       let { element } = coords
-      const moveInPX = 0
-      const transitionTime = speed(containerWidth, MARQUEE_SPEED)
+      const { move, time, direction } = step
+      const transitionTime = speed(time, MARQUEE_SPEED)
       setTransition(coords, transitionTime)
-      element.style.transform = `translateX(${moveInPX}px)`
-      handleCallback(element, true, callback)
-    }
+      element.style.transform = `translate${direction || 'X'}(${move}px)`
 
-    function resetLeft (coords, callback) {
-      moveLeft(coords, callback, true)
-    }
-
-    function moveLeft (coords, callback, reset) {
-      let { element } = coords
-      const moveInPX = wordWidth
-      const transitionTime = reset ? 0 : speed(wordWidth + containerWidth, MARQUEE_SPEED)
-      setTransition(coords, transitionTime)
-      element.style.transform = `translateX(${-moveInPX}px)`
-      handleCallback(element, !reset, callback)
-    }
-
-    function moveInsideRight (coords, callback) {
-      let { element } = coords
-      const moveInPX = containerWidth - wordWidth
-      const transitionTime = speed(containerWidth, MARQUEE_SPEED)
-      setTransition(coords, transitionTime)
-      element.style.transform = `translateX(${moveInPX}px)`
-      handleCallback(element, true, callback)
-    }
-
-    function resetRight (coords, callback) {
-      moveRight(coords, callback, true)
-    }
-
-    function moveRight (coords, callback, reset) {
-      let { element } = coords
-      const moveInPX = containerWidth
-      const transitionTime = reset ? 0 : speed(containerWidth + wordWidth, MARQUEE_SPEED)
-      setTransition(coords, transitionTime)
-      element.style.transform = `translateX(${moveInPX}px)`
-      handleCallback(element, !reset, callback)
-    }
-
-    function resetUp (coords, callback) {
-      moveUp(coords, callback, true)
-    }
-
-    function moveUp (coords, callback, reset) {
-      let { element } = coords
-      const moveInPX = wordHeight
-      const transitionTime = reset ? 0 : speed(wordHeight + containerHeight, MARQUEE_SPEED)
-      setTransition(coords, transitionTime)
-      element.style.transform = `translateY(${-moveInPX}px)`
-      handleCallback(element, !reset, callback)
-    }
-
-    function moveInsideUp (coords, callback) {
-      let { element } = coords
-      const moveInPX = 0
-      const transitionTime = speed(containerHeight, MARQUEE_SPEED)
-      setTransition(coords, transitionTime)
-      element.style.transform = `translateY(${moveInPX}px)`
-      handleCallback(element, true, callback)
-    }
-
-    function resetDown (coords, callback) {
-      moveDown(coords, callback, true)
-    }
-
-    function moveDown (coords, callback, reset) {
-      let { element } = coords
-      const moveInPX = containerHeight
-      const transitionTime = reset ? 0 : speed(containerHeight + wordHeight, MARQUEE_SPEED)
-      setTransition(coords, transitionTime)
-      element.style.transform = `translateY(${moveInPX}px)`
-      handleCallback(element, !reset, callback)
-    }
-
-    function moveInsideDown (coords, callback) {
-      let { element } = coords
-      const moveInPX = containerHeight - wordHeight
-      const transitionTime = speed(containerHeight, MARQUEE_SPEED)
-      setTransition(coords, transitionTime)
-      element.style.transform = `translateY(${moveInPX}px)`
-      handleCallback(element, true, callback)
-    }
-
-    function handleCallback (element, shouldTransition, callback) {
-      if (shouldTransition) {
+      if (transitionTime) {
         element.addEventListener('transitionend', (event) => {
           callback()
         }, { once: true })
@@ -381,81 +299,197 @@ class Marquee extends window.HTMLElement {
       element.style.visibility = 'visible'
     })
 
+    const steps = {
+      up: {
+        outside: {
+          direction: 'Y',
+          move: -wordHeight,
+          time: wordHeight + containerHeight,
+          reset: {
+            direction: 'Y',
+            move: -wordHeight,
+            time: 0
+          }
+        },
+        inside: {
+          direction: 'Y',
+          move: 0,
+          time: containerHeight,
+          reset: {
+            move: 0,
+            time: 0
+          }
+        },
+        insideOnly: {
+          direction: 'Y',
+          move: 0,
+          time: containerHeight - wordHeight,
+          reset: {
+            direction: 'Y',
+            move: 0,
+            time: 0
+          }
+        }
+      },
+      right: {
+        outside: {
+          move: containerWidth,
+          time: containerWidth + wordWidth,
+          reset: {
+            move: containerWidth,
+            time: 0
+          }
+        },
+        inside: {
+          move: containerWidth - wordWidth,
+          time: containerWidth,
+          reset: {
+            move: containerWidth - wordWidth,
+            time: 0
+          }
+        },
+        insideOnly: {
+          move: containerWidth - wordWidth,
+          time: containerWidth - wordWidth,
+          reset: {
+            move: 0,
+            time: 0
+          }
+        }
+      },
+      down: {
+        outside: {
+          direction: 'Y',
+          move: containerHeight,
+          time: containerHeight + wordHeight,
+          reset: {
+            direction: 'Y',
+            move: containerHeight,
+            time: 0
+          }
+        },
+        inside: {
+          direction: 'Y',
+          move: containerHeight - wordHeight,
+          time: containerHeight,
+          reset: {
+            move: containerHeight - wordHeight,
+            time: 0
+          }
+        },
+        insideOnly: {
+          direction: 'Y',
+          move: containerHeight - wordHeight,
+          time: containerHeight - wordHeight,
+          reset: {
+            direction: 'Y',
+            move: containerHeight - wordHeight,
+            time: 0
+          }
+        }
+      },
+      left: {
+        outside: {
+          move: -wordWidth,
+          time: containerWidth + wordWidth,
+          reset: {
+            move: -wordWidth,
+            time: 0
+          }
+        },
+        inside: {
+          move: 0,
+          time: containerWidth,
+          reset: {
+            move: 0,
+            time: 0
+          }
+        },
+        insideOnly: {
+          move: 0,
+          time: containerWidth - wordWidth,
+          reset: {
+            move: 0,
+            time: 0
+          }
+        }
+      }
+    }
+
     let marqueeSteps = {
-      steps: [resetRight, moveLeft]
+      steps: [steps.right.outside.reset, steps.left.outside]
     }
 
     if (direction === 'right') {
       marqueeSteps = {
-        steps: [resetLeft, moveRight]
+        steps: [steps.left.outside.reset, steps.right.outside]
       }
     }
     if (direction === 'up') {
       marqueeSteps = {
-        steps: [resetDown, moveUp]
+        steps: [steps.down.outside.reset, steps.up.outside]
       }
     }
     if (direction === 'down') {
       marqueeSteps = {
-        steps: [resetUp, moveDown]
+        steps: [steps.up.outside.reset, steps.down.outside]
       }
     }
 
     // Slide
     if (behavior === 'slide') {
       marqueeSteps = {
-        steps: [resetRight, moveInsideLeft]
+        steps: [steps.right.outside.reset, steps.left.inside]
       }
 
       if (direction === 'right') {
         marqueeSteps = {
-          steps: [resetLeft, moveInsideRight]
+          steps: [steps.left.outside.reset, steps.right.inside]
         }
       }
       if (direction === 'up') {
         marqueeSteps = {
-          steps: [resetDown, moveInsideUp]
+          steps: [steps.down.outside.reset, steps.up.inside]
         }
       }
       if (direction === 'down') {
         marqueeSteps = {
-          steps: [resetUp, moveInsideDown]
+          steps: [steps.up.outside.reset, steps.down.inside]
         }
       }
     }
 
     // Alternate
-    // TODO figure out why alternative is slower than native?
     if (behavior === 'alternate') {
       marqueeSteps = {
-        setup: resetRight,
-        steps: [moveInsideLeft, moveInsideRight]
+        setup: steps.right.inside.reset,
+        steps: [steps.left.insideOnly, steps.right.insideOnly]
       }
 
       if (direction === 'right') {
         marqueeSteps = {
-          setup: resetLeft,
-          steps: [moveInsideRight, moveInsideLeft]
+          setup: steps.left.insideOnly.reset,
+          steps: [steps.right.insideOnly, steps.left.insideOnly]
         }
       }
       if (direction === 'up') {
         marqueeSteps = {
-          setup: resetUp,
-          steps: [moveInsideDown, moveInsideUp]
+          setup: steps.down.insideOnly.reset,
+          steps: [steps.up.insideOnly, steps.down.insideOnly]
         }
       }
       if (direction === 'down') {
         marqueeSteps = {
-          setup: resetDown,
-          steps: [moveInsideUp, moveInsideDown]
+          setup: steps.up.insideOnly.reset,
+          steps: [steps.down.insideOnly, steps.up.insideOnly]
         }
       }
     }
 
     let childrenTransitioned = 0
     const marqueeLoop = (childWithCoordinates) => {
-      marqueeSteps.steps[0](childWithCoordinates, () => {
-        marqueeSteps.steps[1](childWithCoordinates, () => {
+      handleStep(marqueeSteps.steps[0], childWithCoordinates, () => {
+        handleStep(marqueeSteps.steps[1], childWithCoordinates, () => {
           childrenTransitioned++
           if (childrenTransitioned === childrenLength) {
             doLoop()
@@ -475,7 +509,7 @@ class Marquee extends window.HTMLElement {
       childrenWithCoordinates.forEach((childWithCoordinates) => {
         lettersSetup++
         if (lettersSetup <= childrenLength && marqueeSteps.setup) {
-          marqueeSteps.setup(childWithCoordinates, () => {
+          handleStep(marqueeSteps.setup, childWithCoordinates, () => {
             marqueeLoop(childWithCoordinates)
           })
         } else {

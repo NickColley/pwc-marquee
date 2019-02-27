@@ -8,15 +8,26 @@ This is a project done for fun and I would definitely not recommend using this i
 
 ### Use from CDN
 
-[TODO UNPKG instructions]
+```html
+<pwc-marquee>Scrolling text is fun</pwc-marquee>
 
+<script type="module">
+    import Marquee from "https://unpkg.com/@progressive-web-components-pwc/marquee"
+
+    window.customElements.define('pwc-marquee', Marquee)
+</script>
+```
 ### Install from npm
+
+```bash
+npm install @progressive-web-components-pwc/marquee
+```
 
 ```html
 <pwc-marquee>Scrolling text is fun</pwc-marquee>
 
 <script type="module">
-    import Marquee from "@pwc/marquee"
+    import Marquee from "@progressive-web-components-pwc/marquee"
 
     window.customElements.define('pwc-marquee', Marquee)
 </script>

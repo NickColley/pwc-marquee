@@ -366,7 +366,7 @@ class Marquee extends window.HTMLElement {
 
     function resetDown (coords, callback) {
       let { element } = coords
-      const moveInPX = containerHeight - wordHeight
+      const moveInPX = containerHeight
       setTransition(coords, 0)
       element.style.transform = `translateY(${moveInPX}px)`
       handleCallback(element, false, callback)

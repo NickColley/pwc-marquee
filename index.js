@@ -110,6 +110,11 @@ class Marquee extends window.HTMLElement {
     // Replace current text with wrapped text
     let children = Array.from(this.childNodes)
 
+    // If there's nothing in the element, return early.
+    if (children.length === 0) {
+      return
+    }
+
     if (!stagger) {
       const wrapper = document.createElement('span')
       // Hide before first render to prevent flicker

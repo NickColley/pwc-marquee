@@ -102,6 +102,23 @@
     <h2>scrollamount</h2>
     <pwc-marquee scrollamount="12">Test marquee</pwc-marquee>
     <marquee scrollamount="12">Test marquee</marquee>
+
+    <h2>scrolldelay</h2>
+    <h3>Low scroll delay (ignored)</h3>
+    <pwc-marquee behavior="alternate" scrolldelay="20">Test marquee</pwc-marquee>
+    <marquee behavior="alternate" scrolldelay="20">Test marquee</marquee>
+    <h3>Low scroll delay with truespeed</h3>
+    <pwc-marquee behavior="alternate" scrolldelay="20" truespeed>Test marquee</pwc-marquee>
+    <marquee behavior="alternate" scrolldelay="20" truespeed>Test marquee</marquee>
+    <h3>Default scroll delay (85)</h3>
+    <pwc-marquee behavior="alternate">Test marquee</pwc-marquee>
+    <marquee behavior="alternate">Test marquee</marquee>
+    <h3>Scroll delay 60</h3>
+    <pwc-marquee behavior="alternate" scrolldelay="60">Test marquee</pwc-marquee>
+    <marquee behavior="alternate" scrolldelay="60">Test marquee</marquee>
+    <h3>Scroll delay 250</h3>
+    <pwc-marquee behavior="alternate" scrolldelay="250">Test marquee</pwc-marquee>
+    <marquee behavior="alternate" scrolldelay="250">Test marquee</marquee>
     
     <h2>loop</h2>
     <pwc-marquee loop="1">Test marquee</pwc-marquee>
@@ -186,15 +203,19 @@
     
     <h3>Stagger</h3>
     <h4>letter</h4>
-    <pwc-marquee stagger="letters" staggerscale="1">Testing staggered letters</pwc-marquee>
-    <pwc-marquee stagger="letters" staggerscale="1.5">Testing staggered letters</pwc-marquee>
-    <pwc-marquee stagger="letters" staggerscale="1.5" behavior="slide" scrollamount="50" easing="ease-in-out">Testing staggered <a href="#">link</a> letters</pwc-marquee>
-    <pwc-marquee stagger="letters" staggerscale="1.5" behavior="slide" scrollamount="100">Testing staggered <img style="display: inline-block;" height="16" width="16" src="./billmurray.jpg" alt=""/> letters</pwc-marquee>
+    <pwc-marquee stagger="letters">Testing staggered letters</pwc-marquee>
+    <pwc-marquee stagger="letters">Testing staggered <a href="#">link</a> letters</pwc-marquee>
+    <pwc-marquee stagger="letters">Testing staggered <img style="display: inline-block;" height="16" width="16" src="./billmurray.jpg" alt=""/> letters</pwc-marquee>
+    <pwc-marquee stagger="letters" behavior="slide">Testing staggered letters (slide)</pwc-marquee>
+    <pwc-marquee stagger="letters" behavior="alternate">Testing staggered letters (alternate)</pwc-marquee>
+    <pwc-marquee stagger="letters" easing="ease-in-out">Testing staggered letters (easing)</pwc-marquee>
 
     <h4>words</h4>
-    <pwc-marquee stagger="words" staggerscale="1">Testing staggered words</pwc-marquee>
-    <pwc-marquee stagger="words" staggerscale="1.5">Testing staggered words</pwc-marquee>
-    <pwc-marquee stagger="words" staggerscale="1.5" behavior="slide" scrollamount="100">Testing staggered <a href="#">link</a> words</pwc-marquee>
-    <pwc-marquee stagger="words" staggerscale="1.5" behavior="slide" scrollamount="100">Testing staggered <img style="display: inline-block;" height="16" width="16" src="./billmurray.jpg" alt=""/> words</pwc-marquee>
+    <pwc-marquee stagger="words">Testing staggered words</pwc-marquee>
+    <pwc-marquee stagger="words">Testing staggered <a href="#">link</a> words</pwc-marquee>
+    <pwc-marquee stagger="words">Testing staggered <img style="display: inline-block;" height="16" width="16" src="./billmurray.jpg" alt=""/> words</pwc-marquee>
+    <pwc-marquee stagger="words" behavior="slide">Testing staggered words (slide)</pwc-marquee>
+    <pwc-marquee stagger="words" behavior="alternate">Testing staggered words (alternate)</pwc-marquee>
+    <pwc-marquee stagger="words" easing="ease-in-out">Testing staggered words (easing)</pwc-marquee>
   </body>
 </html>

@@ -48,11 +48,19 @@ class Marquee extends window.HTMLElement {
     // Sets the amount of scrolling at each interval in pixels. The default value is 6.
     const scrollamount = (this.getAttribute('scrollamount') !== null) ? parseInt(this.getAttribute('scrollamount'), 10) : 6
 
-    // scrolldelay
-    // Sets the interval between each scroll movement in milliseconds. The default value is 85. Note that any value smaller than 60 is ignored and the value 60 is used instead, unless truespeed is specified.
-
     // truespeed
     // By default, scrolldelay values lower than 60 are ignored. If truespeed is present, those values are not ignored.
+    const truespeed = (this.getAttribute('truespeed') !== null) ? true : false
+
+    // scrolldelay
+    // Sets the interval between each scroll movement in milliseconds. The default value is 85. Note that any value smaller than 60 is ignored and the value 60 is used instead, unless truespeed is specified.
+    const SCROLL_DELAY_DEFAULT = 85;
+    let scrolldelay = (this.getAttribute('scrolldelay') !== null) ? parseInt(this.getAttribute('scrolldelay'), 10) : SCROLL_DELAY_DEFAULT
+    if (!truespeed) {
+      if (scrolldelay < 60) {
+        scrolldelay = SCROLL_DELAY_DEFAULT;
+      } 
+    }
 
     // vspace
     // Sets the vertical margin in pixels or percentage value.
@@ -81,7 +89,7 @@ class Marquee extends window.HTMLElement {
     const easing = (this.getAttribute('easing') !== null) ? this.getAttribute('easing') : 'linear'
 
     const stagger = (this.getAttribute('stagger') !== null) ? this.getAttribute('stagger') : false
-    const staggerscale = (this.getAttribute('staggerscale') !== null) ? parseFloat(this.getAttribute('staggerscale'), 10) : 1
+    const staggerscale = (this.getAttribute('staggerscale') !== null) ? parseFloat(this.getAttribute('staggerscale'), 10) : 1.5
 
     // If the behaviour is slide, it should only loop once
     let setLoop = loop
@@ -120,7 +128,9 @@ class Marquee extends window.HTMLElement {
       // Hide before first render to prevent flicker
       wrapper.style.visibility = 'hidden'
       // You cannot move text that is inline with translate
-      wrapper.style.display = 'inline-block'
+      const directionIsVertical = direction === 'down' || direction === 'up';
+      wrapper.style.display = directionIsVertical ? 'block' : 'inline-block';
+
       // Indicate that they will change and should be on a GPU layer
       wrapper.style.willChange = 'transform'
 
@@ -258,16 +268,10 @@ class Marquee extends window.HTMLElement {
       containerCoordinates.height
     )
 
-    const MARQUEE_SPEED = 11.8 * scrollamount
-
     let childrenLength = children.length
 
     function mapRange (num, inMin, inMax, outMin, outMax) {
       return (num - inMin) * (outMax - outMin) / (inMax - inMin) + outMin
-    }
-
-    function speed (distance, time) {
-      return distance / time
     }
 
     function setTransition (coords, time) {
@@ -283,13 +287,16 @@ class Marquee extends window.HTMLElement {
 
     function handleStep (step, coords, callback) {
       let { element } = coords
-      const { move, time, direction } = step
-      const transitionTime = speed(time, MARQUEE_SPEED)
+      const { move, delta, direction } = step
+      const distance = delta / scrollamount
+      const time = 1000 / scrolldelay
+      const transitionTime = distance / time
       setTransition(coords, transitionTime)
       element.style.transform = `translate${direction || 'X'}(${move}px)`
-
+      
       if (transitionTime) {
         element.addEventListener('transitionend', (event) => {
+          event.stopPropagation();
           callback()
         }, { once: true })
       } else {
@@ -309,56 +316,56 @@ class Marquee extends window.HTMLElement {
         outside: {
           direction: 'Y',
           move: -wordHeight,
-          time: wordHeight + containerHeight,
+          delta: wordHeight + containerHeight,
           reset: {
             direction: 'Y',
             move: -wordHeight,
-            time: 0
+            delta: 0
           }
         },
         inside: {
           direction: 'Y',
           move: 0,
-          time: containerHeight,
+          delta: containerHeight,
           reset: {
             move: 0,
-            time: 0
+            delta: 0
           }
         },
         insideOnly: {
           direction: 'Y',
           move: 0,
-          time: containerHeight - wordHeight,
+          delta: containerHeight - wordHeight,
           reset: {
             direction: 'Y',
             move: 0,
-            time: 0
+            delta: 0
           }
         }
       },
       right: {
         outside: {
           move: containerWidth,
-          time: containerWidth + wordWidth,
+          delta: containerWidth + wordWidth,
           reset: {
             move: containerWidth,
-            time: 0
+            delta: 0
           }
         },
         inside: {
           move: containerWidth - wordWidth,
-          time: containerWidth,
+          delta: containerWidth,
           reset: {
             move: containerWidth - wordWidth,
-            time: 0
+            delta: 0
           }
         },
         insideOnly: {
           move: containerWidth - wordWidth,
-          time: containerWidth - wordWidth,
+          delta: containerWidth - wordWidth,
           reset: {
             move: 0,
-            time: 0
+            delta: 0
           }
         }
       },
@@ -366,56 +373,56 @@ class Marquee extends window.HTMLElement {
         outside: {
           direction: 'Y',
           move: containerHeight,
-          time: containerHeight + wordHeight,
+          delta: containerHeight + wordHeight,
           reset: {
             direction: 'Y',
             move: containerHeight,
-            time: 0
+            delta: 0
           }
         },
         inside: {
           direction: 'Y',
           move: containerHeight - wordHeight,
-          time: containerHeight,
+          delta: containerHeight,
           reset: {
             move: containerHeight - wordHeight,
-            time: 0
+            delta: 0
           }
         },
         insideOnly: {
           direction: 'Y',
           move: containerHeight - wordHeight,
-          time: containerHeight - wordHeight,
+          delta: containerHeight - wordHeight,
           reset: {
             direction: 'Y',
             move: containerHeight - wordHeight,
-            time: 0
+            delta: 0
           }
         }
       },
       left: {
         outside: {
           move: -wordWidth,
-          time: containerWidth + wordWidth,
+          delta: containerWidth + wordWidth,
           reset: {
             move: -wordWidth,
-            time: 0
+            delta: 0
           }
         },
         inside: {
           move: 0,
-          time: containerWidth,
+          delta: containerWidth,
           reset: {
             move: 0,
-            time: 0
+            delta: 0
           }
         },
         insideOnly: {
           move: 0,
-          time: containerWidth - wordWidth,
+          delta: containerWidth - wordWidth,
           reset: {
             move: 0,
-            time: 0
+            delta: 0
           }
         }
       }

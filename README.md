@@ -53,7 +53,6 @@ As this is a progressive web component, for browsers that do not support custom 
 
 ## To do / Known issues
 
-- Detect [prefers reduced motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion)
 - implement [marquee events](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/marquee#Event_handlers)
 - implement [marquee methods](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/marquee#Methods)
 - If a user changes the size of their screen, the component does not currently adjust correctly.

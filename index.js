@@ -1,5 +1,7 @@
 class Marquee extends window.HTMLElement {
   connectedCallback () {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion)').matches
+
     // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/marquee
     // behavior
     // Sets how the text is scrolled within the marquee. Possible values are scroll, slide and alternate. If no value is specified, the default value is scroll.
@@ -529,7 +531,9 @@ class Marquee extends window.HTMLElement {
         }
       })
     }
-    doLoop()
+    if (!prefersReducedMotion) {
+      doLoop()
+    }
   }
 
   disconnectedCallback () {
